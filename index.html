@@ -270,7 +270,7 @@
     <div class="games-grid" id="github-games">
       <div class="game-card" id="undertale-card">
         <div class="game-image">
-          <img src="https://raw.githubusercontent.com/MootoiMorozik/FreeRealm/main/Undertale-Symbol.png"
+          <img src="https://raw.githubusercontent.com/MootoiMorozik/FreeRealm/main/Undertale.png"
                alt="Undertale"
                onerror="this.onerror=null; this.parentElement.innerHTML='Undertale'; this.parentElement.style.color='#66c0f4'; this.parentElement.style.fontSize='16px';">
         </div>
@@ -294,7 +294,8 @@
           Undertale — ролевая игра, разработанная Тоби Фоксом. Игрок управляет ребёнком, оказавшимся в Подземелье — изолированном мире монстров.
         </p>
         <p class="game-description"><strong>Автор: TobyFox</strong></p>
-        <a href="#" class="download-btn" id="download-btn">⬇ Скачать Undertale</a><br>
+        <a href="https://www.dropbox.com/scl/fi/1kynohz5af9ukp946ls12/Undertale.exe?rlkey=px8zkikvifk6zv4lnsfvr3mr2&st=l29a978r&dl=1"
+           class="download-btn" target="_blank">⬇ Скачать Undertale</a><br>
         <a href="#" class="back-btn" id="back-btn">← Вернуться к списку игр</a>
 
         <div class="progress-container" id="progress-container">
@@ -316,41 +317,6 @@
     document.getElementById('back-btn').addEventListener('click', function () {
       document.getElementById('undertale-page').style.display = 'none';
       document.getElementById('main-content').style.display = 'block';
-    });
-
-    document.getElementById('download-btn').addEventListener('click', function () {
-      var url = 'https://www.dropbox.com/scl/fi/1kynohz5af9ukp946ls12/Undertale.exe?rlkey=px8zkikvifk6zv4lnsfvr3mr2&st=l29a978r&dl=1';
-
-      fetch(url)
-        .then(response => {
-          const totalSize = response.headers.get('Content-Length');
-          const reader = response.body.getReader();
-          let receivedLength = 0;
-
-          document.getElementById('progress-container').style.display = 'block';
-
-          return new ReadableStream({
-            start(controller) {
-              function read() {
-                reader.read().then(({ done, value }) => {
-                  if (done) {
-                    controller.close();
-                    return;
-                  }
-                  receivedLength += value.length;
-                  const progress = totalSize ? (receivedLength / totalSize) * 100 : 0;
-                  document.querySelector('.progress-bar span').style.width = progress + '%';
-                  controller.enqueue(value);
-                  read();
-                });
-              }
-              read();
-            }
-          });
-        })
-        .catch(error => {
-          console.error('Ошибка загрузки файла', error);
-        });
     });
   </script>
 </body>
